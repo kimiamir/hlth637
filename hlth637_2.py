@@ -17,8 +17,6 @@ questions = [
     }
 ]
 
-random.shuffle(questions)
-
 # Streamlit app
 st.title("HLTH637 Quiz Bot")
 st.write("Test your knowledge on health informatics and big data!")
@@ -27,38 +25,41 @@ if "question_index" not in st.session_state:
     st.session_state.question_index = 0
     st.session_state.score = 0
     st.session_state.submitted = False
+    st.session_state.user_answer = None
 
-if st.session_state.question_index < len(questions):
-    current_q = questions[st.session_state.question_index]
-    st.subheader(current_q["question"])
-    
-    user_answer = st.radio("Select your answer:", current_q["options"], index=None, key=f"q_{st.session_state.question_index}")
-    
+current_q = questions[st.session_state.question_index]
+st.subheader(current_q["question"])
+
+if not st.session_state.submitted:
+    st.session_state.user_answer = st.radio("Select your answer:", current_q["options"], index=None, key=f"q_{st.session_state.question_index}")
     if st.button("Submit Answer"):
-        if user_answer:
+        if st.session_state.user_answer is None:
+            st.warning("Please select an answer before submitting.")
+        else:
             st.session_state.submitted = True
-            if user_answer == current_q["answer"]:
+            if st.session_state.user_answer == current_q["answer"]:
                 st.success("Correct! ✅")
                 st.session_state.score += 1
             else:
                 st.error(f"Wrong ❌ The correct answer is: {current_q['answer']}")
             st.write(f"**Explanation:** {current_q['explanation']}")
-        else:
-            st.warning("Please select an answer before submitting.")
-    
-    if st.session_state.submitted:
-        if st.session_state.question_index < len(questions) - 1:
-            if st.button("Next Question"):
-                st.session_state.question_index += 1
-                st.session_state.submitted = False
-                st.rerun()
-        else:
-            st.write("## Quiz Complete! 🎉")
-            st.write(f"Your final score: {st.session_state.score}/{len(questions)}")
-            if st.button("Restart Quiz"):
-                st.session_state.question_index = 0
-                st.session_state.score = 0
-                st.session_state.submitted = False
-                st.rerun()
+            st.experimental_rerun()
+
+if st.session_state.submitted:
+    if st.session_state.question_index < len(questions) - 1:
+        if st.button("Next Question"):
+            st.session_state.question_index += 1
+            st.session_state.submitted = False
+            st.session_state.user_answer = None
+            st.experimental_rerun()
+    else:
+        st.write("## Quiz Complete! 🎉")
+        st.write(f"Your final score: {st.session_state.score}/{len(questions)}")
+        if st.button("Restart Quiz"):
+            st.session_state.question_index = 0
+            st.session_state.score = 0
+            st.session_state.submitted = False
+            st.session_state.user_answer = None
+            st.experimental_rerun()
 
 # Run this script with: `streamlit run your_script.py`

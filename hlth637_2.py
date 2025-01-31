@@ -69,20 +69,22 @@ questions = [
 
 current_index = st.session_state.get('current_index', 0)
 
-# Initialize session state
-if 'answers' not in st.session_state:
+if 'answers' not in st.session_state or len(st.session_state['answers']) != len(questions):
     st.session_state['answers'] = [None] * len(questions)
 
 if 'submitted' not in st.session_state:
     st.session_state['submitted'] = False
 
-# Display question
 if current_index < len(questions):
     question = questions[current_index]
     st.write(question['text'])
 
     options = question['options']
-    selected_option = st.radio('Choose your answer:', options, index=st.session_state['answers'][current_index] if st.session_state['answers'][current_index] is not None else 0)
+    selected_option = st.radio(
+        'Choose your answer:',
+        options,
+        index=options.index(st.session_state['answers'][current_index]) if st.session_state['answers'][current_index] in options else 0
+    )
 
     if st.button('Submit Answer'):
         st.session_state['answers'][current_index] = selected_option
@@ -95,7 +97,6 @@ if current_index < len(questions):
 else:
     st.session_state['submitted'] = True
 
-# Final submission
 if st.session_state['submitted']:
     st.write('Quiz Completed!')
     st.write('Review your answers below:')

@@ -85,15 +85,15 @@ if st.button('Submit Answer'):
     st.session_state['answers'][st.session_state['current_index']] = selected_option
     if st.session_state['current_index'] < len(questions) - 1:
         st.session_state['current_index'] += 1
-    st.experimental_rerun()
+    st.rerun()
 
 if st.button('Previous') and st.session_state['current_index'] > 0:
     st.session_state['current_index'] -= 1
-    st.experimental_rerun()
+    st.rerun()
 
 if st.session_state['current_index'] == len(questions) - 1 and st.button('Finish Quiz'):
     st.session_state['submitted'] = True
-    st.experimental_rerun()
+    st.rerun()
 
 if st.session_state['submitted']:
     st.write('Quiz Completed!')

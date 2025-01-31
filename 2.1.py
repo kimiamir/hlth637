@@ -40,24 +40,37 @@ if st.session_state['page'] == 'info':
 
 # Quiz questions and answers
 questions = [
-   {
+ {
         'text': 'What is the primary characteristic that distinguishes Big Data from traditional data in healthcare?',
         'options': ['A) Limited storage requirements', 'B) Simple formats and structures', 'C) Large volumes, high velocity, and complex variety', 'D) Minimal need for advanced analysis'],
         'correct_answer': 'C) Large volumes, high velocity, and complex variety',
-        'explanation': 'Big Data is defined by its large volume, high velocity, and complex variety, which distinguish it from traditional data in healthcare.'
+        'explanation': 'Big Data is defined by its large volume, high velocity, and complex variety, which distinguish it from traditional data in healthcare.',
+        'wrong_explanations': {
+            'A) Limited storage requirements': 'Big Data requires extensive storage solutions, unlike traditional data.',
+            'B) Simple formats and structures': 'Big Data often consists of unstructured and complex formats.',
+            'D) Minimal need for advanced analysis': 'Big Data requires advanced analytical tools and techniques.'
+        }
     },
     {
-        'text': 'Which of the following is NOT one of the core Vs of Big Data as mentioned in the document?',
+        'text': 'Which of the following is NOT one of the core Vs of Big Data?',
         'options': ['A) Volume', 'B) Validity', 'C) Velocity', 'D) Variety'],
         'correct_answer': 'B) Validity',
-        'explanation': 'The core Vs of Big Data are Volume, Velocity, and Variety. Validity is not traditionally included in this list.'
+        'explanation': 'The core Vs of Big Data are Volume, Velocity, and Variety. Validity is not traditionally included in this list.',
+        'wrong_explanations': {
+            'A) Volume': 'Volume refers to the massive amount of data generated.',
+            'C) Velocity': 'Velocity describes the speed at which data is generated and processed.',
+            'D) Variety': 'Variety indicates the different types of data formats (structured, semi-structured, unstructured).'
+        }
     },
     {
         'text': 'Unstructured data in healthcare typically includes:',
         'options': ['A) Electronic medical records', 'B) Readings from medical devices', 'C) Diagnostic imaging and handwritten notes', 'D) Patient demographics stored in databases'],
         'correct_answer': 'C) Diagnostic imaging and handwritten notes',
-        'explanation': 'Unstructured data includes complex data formats such as images, handwritten notes, and free-text data.'
-    },
+        'explanation': 'Unstructured data includes complex data formats such as images, handwritten notes, and free-text data.',
+        'wrong_explanations': {
+            'A) Electronic medical records': 'These are structured data as they are stored in databases.',
+            'B) Readings from medical devices': 'These are semi-structured data rather than unstructured.',
+            'D) Patient demographics stored in databases': 'These are structured data, organized in predefined formats.'
     {
         'text': 'Which category of data analytics focuses on predicting future outcomes using patterns from historical data?',
         'options': ['A) Descriptive Analytics', 'B) Diagnostic Analytics', 'C) Predictive Analytics', 'D) Prescriptive Analytics'],

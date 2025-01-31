@@ -71,6 +71,8 @@ questions = [
             'A) Electronic medical records': 'These are structured data as they are stored in databases.',
             'B) Readings from medical devices': 'These are semi-structured data rather than unstructured.',
             'D) Patient demographics stored in databases': 'These are structured data, organized in predefined formats.'
+        }
+    },
     {
         'text': 'Which category of data analytics focuses on predicting future outcomes using patterns from historical data?',
         'options': ['A) Descriptive Analytics', 'B) Diagnostic Analytics', 'C) Predictive Analytics', 'D) Prescriptive Analytics'],

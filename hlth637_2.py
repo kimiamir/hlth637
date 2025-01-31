@@ -67,7 +67,8 @@ questions = [
     }
 ]
 
-current_index = st.session_state.get('current_index', 0)
+if 'current_index' not in st.session_state:
+    st.session_state['current_index'] = 0
 
 if 'answers' not in st.session_state or len(st.session_state['answers']) != len(questions):
     st.session_state['answers'] = [None] * len(questions)
@@ -75,37 +76,30 @@ if 'answers' not in st.session_state or len(st.session_state['answers']) != len(
 if 'submitted' not in st.session_state:
     st.session_state['submitted'] = False
 
-if current_index < len(questions):
-    question = questions[current_index]
-    st.write(question['text'])
+question = questions[st.session_state['current_index']]
+st.write(question['text'])
+options = question['options']
+selected_option = st.radio('Choose your answer:', options, index=options.index(st.session_state['answers'][st.session_state['current_index']]) if st.session_state['answers'][st.session_state['current_index']] in options else 0)
 
-    options = question['options']
-    selected_option = st.radio(
-        'Choose your answer:',
-        options,
-        index=options.index(st.session_state['answers'][current_index]) if st.session_state['answers'][current_index] in options else 0
-    )
+if st.button('Submit Answer'):
+    st.session_state['answers'][st.session_state['current_index']] = selected_option
+    if st.session_state['current_index'] < len(questions) - 1:
+        st.session_state['current_index'] += 1
+    st.experimental_rerun()
 
-    if st.button('Submit Answer'):
-        st.session_state['answers'][current_index] = selected_option
-        if current_index < len(questions) - 1:
-            st.session_state['current_index'] += 1
+if st.button('Previous') and st.session_state['current_index'] > 0:
+    st.session_state['current_index'] -= 1
+    st.experimental_rerun()
 
-    if st.button('Previous') and current_index > 0:
-        st.session_state['current_index'] -= 1
-
-else:
+if st.session_state['current_index'] == len(questions) - 1 and st.button('Finish Quiz'):
     st.session_state['submitted'] = True
+    st.experimental_rerun()
 
 if st.session_state['submitted']:
     st.write('Quiz Completed!')
-    st.write('Review your answers below:')
-
     for i, question in enumerate(questions):
         st.write(f"**Question {i+1}:** {question['text']}")
         st.write(f"Your Answer: {st.session_state['answers'][i]}")
         st.write(f"Correct Answer: {question['correct_answer']}")
         st.write(f"Explanation: {question['explanation']}")
         st.write('---')
-
-st.session_state['current_index'] = current_index

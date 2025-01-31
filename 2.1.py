@@ -141,7 +141,7 @@ if st.session_state['page'] == 'results':
     st.write(f"Email: {st.session_state['email']}")
     st.write(f"Your Score: {correct_count}/{total_questions}")
     
-    st.success("Congratulations on finishing the Emerald Group's Learning Activity!")
+    st.success("Congratulations on finishing the Emerald Group's Module 2 Learning Activity! Please take a screenshot and send this to our TA")
     
     for i, question in enumerate(questions):
         st.write(f"**Question {i+1}:** {question['text']}")
